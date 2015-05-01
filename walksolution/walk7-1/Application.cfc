@@ -1,14 +1,21 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManager">
+	<cfset this.name = "ProposalManager63">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
 	
+	<cfset this.restsettings.autoregister="true"/>
+  	<cfset this.restsettings.servicemapping="proposalmanager"/>
+  	<cfset this.restsettings.usehost=true/>
+	
+	<cfset this.serialization.serializeQueryAs = "struct">
+
+	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk5-4/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk5-4.components.">
+		<cfset application.basehref = "/ftcf11/walksolution/walk6-3/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk6-3.components.">
 		<cfset application.uploadDir = expandpath('.') & "/../../data">
 		
 		<cfset application.cfc = structnew()>

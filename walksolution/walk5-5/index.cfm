@@ -6,9 +6,6 @@
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
-<cfoutput>
-	#application.uploadDir#
-</cfoutput>
 
 <h1>
 	Welcome to Proposal Manager
@@ -35,6 +32,7 @@
 		<th>Type</th>
 		<th>Company</th>
 		<th>Download</th>
+		<th>Edit</th>
 	</tr>
 	<cfoutput query="q">
 		<tr>
@@ -48,6 +46,9 @@
 					[download]
 					</a>
 				</cfif>
+			</td>
+			<td>
+				<a href="admin/asset.cfm?id=#q.id#">[Edit]</a>
 			</td>
 		</tr>
 	</cfoutput>

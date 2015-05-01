@@ -6,9 +6,15 @@
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
-<cfoutput>
-	#application.uploadDir#
-</cfoutput>
+
+<script type="text/javascript">
+	function deleteRecord(id,label) {
+		if (confirm("Delete " + label + "?")) {
+			location.href='admin/asset.cfm?id=' + id + '&action=delete'
+		}
+	}
+</script>
+
 
 <h1>
 	Welcome to Proposal Manager
@@ -28,6 +34,7 @@
 	<cfinput name="btnSubmit" type="submit" value="Search">
 </cfform>
 
+<cfsavecontent variable="pagecontent">
 <table border="1">
 	<tr>
 		<th>Updated</th>
@@ -35,6 +42,8 @@
 		<th>Type</th>
 		<th>Company</th>
 		<th>Download</th>
+		<th>Edit</th>
+		<th>Del</th>
 	</tr>
 	<cfoutput query="q">
 		<tr>
@@ -49,13 +58,38 @@
 					</a>
 				</cfif>
 			</td>
+			<td>
+				<a href="admin/asset.cfm?id=#q.id#">[Edit]</a>
+			</td>
+			<td>
+				<a href="javascript:deleteRecord(#q.id#,'#jsStringFormat(q.title)#')">[Del]</a>
+			</td>
 		</tr>
 	</cfoutput>
 </table>
+</cfsavecontent>
+
+<cfif not isdefined("url.print")>
+	<cfoutput>#variables.pagecontent#</cfoutput>
+<cfelse>
+	<!---
+	<cfhtmltopdf source="http://www.figleaf.com">
+	  <cfoutput>#variables.pagecontent#</cfoutput>
+	</cfhtmltopdf>
+	--->
+	<cfhtmltopdf>
+	 	<cfoutput>#variables.pagecontent#</cfoutput>
+	</cfhtmltopdf>
+	<cfabort>
+</cfif>
 
 <input type="button" 
 	value="Add New Document" 
 	onclick="location.href='admin/asset.cfm'">
+
+<input type="button" 
+	value="Print" 
+	onclick="location.href='index.cfm?print'">
 
 
 <cfinclude template="#application.basehref#includes/footer.cfm">

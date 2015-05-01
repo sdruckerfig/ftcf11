@@ -41,7 +41,7 @@
 		<cfargument name="contentUrl" required="yes" type="string">
 		<cfargument name="idAssetType" required="yes" type="numeric">
 		
-		<cfif isdefined("form.fileUpload")>
+		<cfif isdefined("form.fileUpload") and form.fileupload is not "">
 			<cfset local.filename = uploadFile()>
 		<cfelse>
 			<cfset local.filename = "">
@@ -70,6 +70,45 @@
 	</cffunction>
 
 
+
+
+	<cffunction name="updateRecord" access="public" roles="admin,superadmin" returntype="Numeric">
+		
+		<cfargument name="id" required="yes" type="numeric">
+		<cfargument name="title" required="yes" type="string">
+		<cfargument name="idCompany" required="yes" type="numeric">
+		<cfargument name="description" required="yes" type="string">
+		<cfargument name="contentUrl" required="yes" type="string">
+		<cfargument name="idAssetType" required="yes" type="numeric">
+		
+		<cfif isdefined("form.fileUpload") and form.fileupload is not "">
+			<cfset local.filename = uploadFile()>
+		<cfelse>
+			<cfset local.filename = "">
+		</cfif>
+		
+		<cfquery result="local.stResult">
+			update Asset 
+			 set 
+			 title = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.title#" >,
+			 <cfif local.filename is not "">
+			 filename = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.filename#">,
+			 </cfif>
+			 idCompany = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idCompany#" >,
+			 description = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.description#">,
+			 contentUrl = 	<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentUrl#">,
+			 idAssetType = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idAssetType#">,
+			 updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">,
+			 updatedate = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
+			 begintime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">
+		  where id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.id#">
+		</cfquery>
+		
+		<cfreturn arguments.id>
+		
+	</cffunction>
+
+
 	<cffunction name="get" access="public" returntype="query">
 		<cfargument name="searchterm" required="false" default="">
 		<cfargument name="id" type="numeric" required="false" default="0">
@@ -80,6 +119,10 @@
 					asset.updatedate,
 					company.companyName,
 					assetType.text as assetType,
+					asset.idAssetType,
+					asset.description,
+					asset.idCompany,
+					asset.contentUrl,
 					filename
 			from	asset join company
 						on asset.idCompany = company.id

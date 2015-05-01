@@ -7,8 +7,8 @@
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk5-4/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk5-4.components.">
+		<cfset application.basehref = "/ftcf11/walksolution/walk5-5/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk5-5.components.">
 		<cfset application.uploadDir = expandpath('.') & "/../../data">
 		
 		<cfset application.cfc = structnew()>
