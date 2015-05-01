@@ -7,7 +7,19 @@
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk4-1/">
+		<cfset application.basehref = "/ftcf11/walksolution/walk5-4/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk5-4.components.">
+		
+		<cfset application.cfc = structnew()>
+		
+		<cfset local.cfcList = "Base,Login,Asset,Company,AssetType">
+		
+		<cfloop list="#local.cfcList#" index="local.thisCfcName">
+			<cfset application.cfc[local.thisCfcName] = createObject(
+				"component",
+				"#application.cfcpath##local.thisCfcName#"
+			)>
+		</cfloop>
 		
 		<cfreturn true>
 	</cffunction>
@@ -19,6 +31,13 @@
 			<cfset onApplicationStart()>
 			<cfset onSessionStart()>
 		</cfif> 
+		
+		<cfif not isUserInRole("SuperAdmin") and
+			  arguments.targetpage contains "/admin/">
+			  
+			  <cflocation url="#application.basehref#login/index.cfm">
+			  
+		</cfif>
 		
 	</cffunction>
 	

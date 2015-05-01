@@ -5,6 +5,8 @@
 
 <h1>Welcome to Proposal Manager!</h1>
 
-<cfdump var="#session#">
-
+<cfoutput>
+	Your new password is #application.cfcUtils.generatePassword(10)#
+</cfoutput
+>
 <cfinclude template="#application.basehref#includes/footer.cfm">
