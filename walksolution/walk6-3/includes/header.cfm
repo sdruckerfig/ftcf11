@@ -1,8 +1,8 @@
 <cfset nav = [
-   {
-  	 label = "Content Assets",
-  	 url = "assets/assets.cfm",
-  	 roles = ""
+ 	{
+   	 label="Logout",
+   	 url = "login/logout.cfm",
+   	 roles = ""
    },
    {
    	 label = "Companies",
@@ -10,9 +10,9 @@
    	 roles = "admin"
    },
    {
-   	 label="Logout",
-   	 url = "login/logout.cfm",
-   	 roles = ""
+  	 label = "Content Assets",
+  	 url = "assets/assets.cfm",
+  	 roles = ""
    }
 ]>
 
@@ -21,43 +21,12 @@
 <html>
 	<head>
 		<title></title>
-		<style>
-			
-			body {
-				font-family: Arial;	
-			}
-			
-			nav {
-				height: 25px;
-				background-color: silver;
-			}
-			
-			nav > span {
-				display: inline-block;
-				text-align: center;
-				width: 125px;
-				height: 23px;
-				border: 1px solid black;
-				float: right;
-			}
-			
-			label {
-				display: block;
-				width: 100px;
-				float: left;
-			}
-			
-			br {
-				clear: all;
-			}
-			
-			input, textarea, select {
-				width: 200px;
-				margin-bottom: 10px;
-			}
-		</style>
+		<link rel="stylesheet" 
+			  type="text/css" 
+			  href="/ftcf11/shared/css/Application.css" />
 	</head>
 	<body>
+		<header>
 		<h1>Proposal Manager</h1>
 		<nav>
 			<cfoutput>
@@ -68,6 +37,7 @@
 			</cfloop>
 			</cfoutput>
 		</nav>
+		</header>
 		
 		
 	

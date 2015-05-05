@@ -1,0 +1,142 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+/*Global*/
+body {
+	font-family: 'Open Sans', sans-serif;
+	margin:0;
+	padding:0;
+}
+
+main {
+	padding: 10px;
+}
+
+a,
+a:visited{
+	// color:#81cfe0;
+	text-decoration:none;	
+}
+a:hover{color:#3da19a;}
+
+label {
+	display: inline-block;
+}
+br {
+	clear: all;
+}
+
+input{
+	padding:8px;
+	border:1px solid #6C7A89;
+	width:200px;
+	display: inline-block;
+}
+
+/*Buttons*/
+input[type="button"],
+input[type="submit"]{
+	padding: 5px 20px;
+	border: 2px solid #81cfe0;
+	width:auto;
+	background:#81cfe0;
+	font-weight:400;
+	font-size:14px;
+	color:#ffffff;
+	margin:0;
+	display:inline-block;
+	vertical-align:middle;
+}
+input[type="button"]:hover,
+input[type="submit"]:hover{
+background:#ffffff;	
+	cursor:pointer;
+	color:#81cfe0;
+	border: 2px solid #81cfe0;
+}
+
+.subheader,
+form,
+.additional_buttons,
+.footer {
+	padding:0 2%;
+	display:block;
+	float:left;
+	width:96%;
+	margin:0 0 20px;
+}
+
+/*Header*/
+header {
+	background: linear-gradient(to right, #3da19a 0%, #8edff0 59%, #81cfe0 87%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	display:block;
+	float:left;
+	width:96%;
+	padding:50px 2%;
+	border-bottom:4px solid #6C7A89;
+}
+
+header h1{
+	font-weight:300;
+	font-size:40px;
+	text-transform:uppercase;
+	display:block;
+	float:left;
+	margin:0;
+	padding:0;
+	width:auto;
+	color:#ffffff;
+}
+nav {
+  display:block;
+  float:right;
+  padding:5px 0;
+}
+nav > a {
+  display: block;
+  text-align: center;
+  letter-spacing:1px;
+  padding: 10px 20px;
+  border: 2px solid #ffffff;
+  color:#ffffff;
+  float:right;
+  margin-left:10px;
+  font-weight:400;
+  font-size:14px;
+  text-transform:uppercase;
+}
+nav > a:hover{
+	background:#ffffff;	
+	cursor:pointer;
+	color:#81cfe0;
+}
+
+/*Subheader*/
+.subheader h1 {display:block;float:left;width:100%;font-weight:300;}
+.subheader h2 {font-weight:400;color:#3da19a;}
+
+/*Table*/
+main table{
+	border:1px solid #6C7A89;
+	padding:0;
+	margin:2% 2%;
+	border-spacing:0;
+	width:auto;
+	text-align:left;
+}
+
+main table th{font-weight:600;}
+main table td{font-weight:300;}
+
+main table th,
+main table td{
+	padding:10px 20px;
+	width:auto;	
+	
+}
+
+main tr:nth-child(even) {background: #f7f7f7;}
+
+/*Footer*/
+.footer{
+	font-weight:300;
+}

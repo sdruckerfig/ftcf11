@@ -32,26 +32,18 @@ Date        Action
    
 ]>
 
-<cfif isdefined("attributes.pagetitle")>
-	<cfset variables.pagetitle = attributes.pagetitle>
-</cfif>
-
 <doctype html>
 <html>
 	<head>
 	<title>
-	 <!--- insert dynamic title here --->
-     <cfif isdefined("variables.pagetitle")>
-     	<cfoutput>#variables.pagetitle#</cfoutput>
-     </cfif>
+     <!--- insert dynamic title here --->
    </title>
-
    <link rel="stylesheet" type="text/css" 
 	     href="/ftcf11/shared/css/Application.css" />
 	</head>
 	<body>
-    <!-- app menu will go here -->
-    <header>
+   <!-- app menu will go here -->
+   <header>
     <h1>Proposal Manager</h1>
 	<nav>
 		<cfoutput>
@@ -61,9 +53,6 @@ Date        Action
 		</cfoutput>
 	</nav>
 	</header>
-
 	<main>
-	<cfif isdefined("variables.pagetitle")>
-		<cfoutput><h2>#variables.pagetitle#</h2></cfoutput>
-	</cfif>
+
 

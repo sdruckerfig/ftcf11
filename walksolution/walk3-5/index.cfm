@@ -1,25 +1,22 @@
-<cfset Kardashians = [
-  {firstName = "Khloe", lastName = "Kardashian"},
-  {firstName = "Kourtney", lastName = "Kardashian"},
-  {firstName = "Kim", lastName = "Kardashian"}
-]>
-
 <!---
-<cfdump var="#variables.Kardashians#">
+File   : index.cfm
+Purpose: Endpoint for application
+By     : Steve Drucker
+Created: 04/17/2015
+
+Usage:
+Direct invocation
+
+Modification Log:
+Date        Action
+=============================================
+04/18/2015  Created
 --->
 
-<cfset Druckers = duplicate(Kardashians)>
 
-<cfset Druckers[2].lastName = "Drucker">
+<cfset pageTitle = "Welcome to Proposal Manager">
 
-<cfdump var="#variables.Druckers#">
-<cfdump var="#variables.Kardashians#">
+<cfinclude template="includes/header.cfm">
 
-<cfset Kardashians[3].salary = randrange(237823,478733)>
 
-<cfoutput>
-	<cfset kSister = variables.Kardashians[3]>
-	#variables.kSister.firstName# #variables.kSister.lastName# 
-	earned #dollarformat(variables.kSister.salary)# on #dateFormat(now(),"mmmm dd, yyyy")#
-</cfoutput>
-
+<cfinclude template="includes/footer.cfm">

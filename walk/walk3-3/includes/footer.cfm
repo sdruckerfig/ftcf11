@@ -13,9 +13,6 @@ Date        Action
 04/18/2015  Created
 --->
 
-<footer>
- <!--- insert copyright info here --->
-</footer>
 
 </body>
 </html>
