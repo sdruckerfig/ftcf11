@@ -1,4 +1,4 @@
-<cfcomponent output="false">
+<cfcomponent output="false" extends="Base">
 
   <cffunction name="login" access="public" hint="Authenticate User" returntype="boolean" >
   	<cfargument name="username" type="string" required="true">

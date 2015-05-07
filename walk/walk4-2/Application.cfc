@@ -7,7 +7,7 @@
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk4-2/">
+		<cfset application.basehref = "/ftcf11/walk/walk4-2/">
 		
 	
 		<cfreturn true>

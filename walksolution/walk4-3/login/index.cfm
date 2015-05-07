@@ -1,4 +1,4 @@
-<cfinclude template="../includes/header.cfm">
+<cfmodule template="../includes/header.cfm" pageTitle="Authenticate!">
 
 <cfif isdefined("form.username")>
 	<cfif application.cfc.login.Login(form.username,form.password)>
@@ -7,8 +7,6 @@
 		Authentication failed - Please Try Again!
 	</cfif>
 </cfif>
-
-<h1>Please Login</h1>
 
 <cfform preservedata="true">
 	
@@ -19,7 +17,7 @@
 				message="You must enter a user name">
 	<br />
 	<label for="password">Password:</label>
-	<cfinput 	type="text" 
+	<cfinput 	type="password" 
 				name="password" 
 				required="true" 
 				message="You must enter a password">
