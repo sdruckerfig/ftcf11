@@ -8,11 +8,7 @@
 	<cffunction name="onApplicationStart">
 		
 		<cfset application.basehref = "/ftcf11/walksolution/walk4-2/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk4-2.components.">
 		
-		<cfset application.cfc = {
-			login = createObject("component","#application.cfcpath#Login")
-		}> 
 	
 		<cfreturn true>
 	</cffunction>

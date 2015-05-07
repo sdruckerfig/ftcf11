@@ -1,11 +1,11 @@
 <!---
-File   : footer.cfm
-Purpose: Common Footer
+File   : index.cfm
+Purpose: Endpoint for application
 By     : Steve Drucker
 Created: 04/17/2015
 
 Usage:
-Invoke at the bottom of a CFM by using <cfinclude>
+Direct invocation
 
 Modification Log:
 Date        Action
@@ -13,9 +13,3 @@ Date        Action
 04/18/2015  Created
 --->
 
-<footer>
-
-</footer>
-
-</body>
-</html>

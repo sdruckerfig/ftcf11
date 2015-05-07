@@ -50,10 +50,9 @@ Date        Action
       <cfoutput>#variables.pagetitle#</cfoutput>
      </cfif>
    </title>
-   <cfoutput>
+
    <link rel="stylesheet" type="text/css" 
-       href="#application.cssHref#Application.css" />
-  </cfoutput>
+       href="/ftcf11/shared/css/Application.css" />
   </head>
   <body>
     <!-- app menu will go here -->
@@ -62,7 +61,7 @@ Date        Action
   <nav>
     <cfoutput>
     <cfloop array="#variables.nav#" index="thisLink">
-      <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+      <a href="#thislink.url#">#thislink.label#</a>
     </cfloop>
     </cfoutput>
   </nav>
