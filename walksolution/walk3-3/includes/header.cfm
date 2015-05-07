@@ -26,8 +26,13 @@ Date        Action
    },
    {
    	 label="Content Assets",
-   	 url = "assets/assets.cfm",
+   	 url = "admin/Asset.cfm",
    	 roles = ""
+   },
+   {
+     label="Home",
+     url = "/index.cfm",
+     roles = ""
    }
 ]>
 

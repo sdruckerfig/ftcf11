@@ -7,7 +7,8 @@
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk4-1/">
+		<cfset application.baseHref = "/ftcf11/walksolution/walk4-1/">
+		<cfset application.cssHref = "/ftcf11/shared/css/">
 		
 		<cfreturn true>
 	</cffunction>
@@ -17,18 +18,8 @@
 		
 		<cfif isdefined("url.init")>
 			<cfset onApplicationStart()>
-			<cfset onSessionStart()>
 		</cfif> 
 		
 	</cffunction>
 	
-	
-	<cffunction name="onSessionStart">
-		
-		<cfif not isdefined("session.username")>
-			<cfset session.username = "Anonymous">
-		</cfif>
-		
-	</cffunction>
-
 </cfcomponent>

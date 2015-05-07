@@ -83,13 +83,14 @@
 	<cfabort>
 </cfif>
 
-<input type="button" 
-	value="Add New Document" 
-	onclick="location.href='admin/asset.cfm'">
 
 <input type="button" 
 	value="Print" 
 	onclick="location.href='index.cfm?print'">
+
+<input type="button" 
+	value="Download" 
+	onclick="location.href='index.cfm?excel'">
 
 
 <cfinclude template="#application.basehref#includes/footer.cfm">

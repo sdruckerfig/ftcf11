@@ -20,14 +20,19 @@ Date        Action
    	 roles = ""
    },
    {
-  	 label = "Content Assets",
-  	 url = "assets/assets.cfm",
+  	 label = "Add Asset",
+  	 url = "admin/asset.cfm",
   	 roles = ""
    },
    {
    	 label = "Companies",
    	 url = "admin/companies.cfm",
    	 roles = "admin"
+   },
+   {
+     label="Home",
+     url = "index.cfm",
+     roles = ""
    }
    
 ]>

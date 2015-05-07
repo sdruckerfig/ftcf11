@@ -20,16 +20,23 @@ a:hover{color:#3da19a;}
 
 label {
 	display: inline-block;
+	width: 200px;
 }
 br {
 	clear: all;
 }
 
-input{
+input, select, textarea {
 	padding:8px;
 	border:1px solid #6C7A89;
 	width:200px;
 	display: inline-block;
+	margin-bottom: 10px;
+}
+
+textarea[name=description] {
+	width: 405px;
+	height: 100px;
 }
 
 /*Buttons*/
