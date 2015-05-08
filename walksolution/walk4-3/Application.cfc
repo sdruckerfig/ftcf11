@@ -1,15 +1,16 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManager42">
+	<cfset this.name = "ProposalManager43">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk4-2/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk4-2.components.">
-		
+		<cfset application.basehref = "/ftcf11/walksolution/walk4-3/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk4-3.components.">
+		<cfset application.cssHref = "/ftcf11/shared/css/">
+
 		<cfset application.cfc = {
 			login = createObject("component","#application.cfcpath#Login")
 		}> 

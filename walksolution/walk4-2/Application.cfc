@@ -9,6 +9,7 @@
 		
 		<cfset application.basehref = "/ftcf11/walksolution/walk4-2/">
 		<cfset application.cfcpath = "ftcf11.walksolution.walk4-2.components.">
+		<cfset application.cssHref = "/ftcf11/shared/css/">
 		
 		<cfset application.cfc = {
 			login = createObject("component","#application.cfcpath#Login")
