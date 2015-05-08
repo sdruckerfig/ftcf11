@@ -22,7 +22,7 @@
   	
   </cffunction>
   
-  <cffunction name="logout" access="public" hint="Log out user" returntype="boolean">
+  <cffunction name="logout" access="public" hint="Log out user" returntype="boolean"  roles="superadmin,admin,user">
   	
   	<cflogout>
   	<cfreturn true>
