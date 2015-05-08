@@ -1,6 +1,6 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManagerSolution41">
+	<cfset this.name = "ProposalManagerSolution41Solution">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
