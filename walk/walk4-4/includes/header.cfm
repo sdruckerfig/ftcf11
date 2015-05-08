@@ -17,7 +17,7 @@ Date        Action
 {
      label="Logout",
      url = "login/logout.cfm",
-     roles = "admin"
+     roles = "user,admin,superadmin"
    },
    {
      label = "Add Asset",
@@ -27,7 +27,7 @@ Date        Action
    {
      label = "Companies",
      url = "admin/companies.cfm",
-     roles = "admin"
+     roles = "superadmin"
    },
    {
      label = "Home",
@@ -62,7 +62,10 @@ Date        Action
   <nav>
     <cfoutput>
     <cfloop array="#variables.nav#" index="thisLink">
+     <!--- step 24 --->
+     
       <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+    
     </cfloop>
     </cfoutput>
   </nav>
