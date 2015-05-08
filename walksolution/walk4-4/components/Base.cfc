@@ -1,6 +1,6 @@
 <cfcomponent hint="Shared utilities" output="false">
 
-	<cffunction name="generatePassword" access="public" returntype="string" hint="Generate a 5 character random password">
+	<cffunction name="generatePassword" returntype="string" hint="Generate a 5 character random password">
 		<cfargument name="numchars" required="false" default="5">
 			
 		<cfset local.password = "">
