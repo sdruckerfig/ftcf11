@@ -1,14 +1,14 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManager51Solution">
+	<cfset this.name = "ProposalManager53">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk5-1/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk5-1.components.">
+		<cfset application.basehref = "/ftcf11/walk/walk5-3/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk5-3.components.">
 		
 		<cfset application.cfc = structnew()>
 		
@@ -39,7 +39,7 @@
 			<cfset onSessionStart()>
 		</cfif> 
 		
-		<cfif not isUserInRole("superadmin") and
+		<cfif not isUserInRole("SuperAdmin") and
 			  arguments.targetpage contains "/admin/">
 			  
 			  <cflocation url="#application.basehref#login/index.cfm">

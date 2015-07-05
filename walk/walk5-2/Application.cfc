@@ -1,14 +1,14 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManager51Solution">
+	<cfset this.name = "ProposalManager52">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk5-1/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk5-1.components.">
+		<cfset application.basehref = "/ftcf11/walk/walk5-2/">
+		<cfset application.cfcpath = "ftcf11.walk.walk5-2.components.">
 		
 		<cfset application.cfc = structnew()>
 		
