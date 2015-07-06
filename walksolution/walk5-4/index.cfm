@@ -1,14 +1,15 @@
 <cfparam name="form.searchterm" default="">
 
 
-<cfset q = application.cfc.Asset.get(form.searchterm)>
+<cfif not isdefined("url.newId")>
+	<cfset q = application.cfc.Asset.get(form.searchterm)>
+<cfelse>
+	<cfset q = application.cfc.Asset.get(form.searchterm,0)>
+</cfif>
 
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
-<cfoutput>
-	#application.uploadDir#
-</cfoutput>
 
 <h1>
 	Welcome to Proposal Manager
@@ -52,10 +53,6 @@
 		</tr>
 	</cfoutput>
 </table>
-
-<input type="button" 
-	value="Add New Document" 
-	onclick="location.href='admin/asset.cfm'">
 
 
 <cfinclude template="#application.basehref#includes/footer.cfm">

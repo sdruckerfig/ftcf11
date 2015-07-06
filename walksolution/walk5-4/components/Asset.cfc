@@ -2,14 +2,13 @@
 
 	<cffunction name="uploadFile" access="public" roles="admin,superadmin" returntype="string">
 		
-		<cfset var stData = {}>
 		
 		<cffile action="upload"
 			destination="#application.uploaddir#" 
 			filefield="fileupload"
 			accept="image/jpg,image/jpeg"
 			nameconflict="makeunique" 
-			result="stData">
+			result="local.stData">
 		
 		<cfreturn stdata.serverfile>
 		
@@ -23,7 +22,7 @@
 			<cfset local.filespec = application.uploaddir & local.qrec.filename>
 			
 			<cflog file="downloader" 
-			   text="Filespec: #local.qrec.filename#, #local.qrec.recordcount#" 
+			   text="Filespec: #local.filespec#, #local.qrec.filename#, #local.qrec.recordcount#" 
 			   type="information">
 			
 			<cfheader name="Content-Disposition" value="attachment; filename=#local.qrec.filename#">
@@ -71,23 +70,28 @@
 
 
 	<cffunction name="get" access="public" returntype="query">
-		<cfargument name="searchterm" required="false" default="">
+		<cfargument name="searchterm" required="false" type="string" default="">
+		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
 		<cfargument name="id" type="numeric" required="false" default="0">
 		
-		<cfquery name="local.q" result="local.stresult">
+		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
+			<cfset arguments.timespan = createtimespan(0,0,0,0)>
+		</cfif>
+		
+		<cfquery name="local.q" cachedwithin="#arguments.timespan#">
 			select 	asset.id, 
 					asset.title,
 					asset.updatedate,
 					company.companyName,
-					assetType.text as assetType,
-					filename
+					asset.filename,
+					assetType.text as assetType
 			from	asset join company
 						on asset.idCompany = company.id
 					join assetType
 						on asset.idAssetType = AssetType.id	
 			where 	asset.endtime is null
 			
-			<cfif trim(arguments.searchterm) is not "">
+			<cfif arguments.searchterm is not "">
 				  and match(title,description,fullContent) against (
 				  	<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.searchterm#">
 				  )
@@ -103,15 +107,8 @@
 			
 		</cfquery>
 		
-		<cflog file="downloader" text="#local.stresult.sql#" type="information">
-	
-		
 		<cfreturn local.q>
 		
 	</cffunction>
-	
-	
-	
-
 
 </cfcomponent>
