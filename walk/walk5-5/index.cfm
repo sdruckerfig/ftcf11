@@ -52,7 +52,7 @@
 				</cfif>
 			</td>
 			<td>
-				<a href="admin/asset.cfm?id=#q.id#">[Edit]</a>
+				<!--- add edit link here --->
 			</td>
 		</tr>
 	</cfoutput>
