@@ -2,14 +2,6 @@
 
 <!--- handle record save --->
 
-<cfif isdefined("url.action") and url.action is "delete">
-	<cfset application.cfc.Asset.deleteRecord(id=url.id)>
-	<cflocation url="../index.cfm">
-</cfif>
-
-
-<!--- handle record save --->
-
 <cfif isdefined("form.btnSubmit")>
 	
 	<cfif form.id is 0>
@@ -124,5 +116,3 @@
 
 
 <cfinclude template="../includes/footer.cfm">
-
-

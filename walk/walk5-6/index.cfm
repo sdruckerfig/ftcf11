@@ -1,20 +1,17 @@
 <cfparam name="form.searchterm" default="">
 
 
-<cfset q = application.cfc.Asset.get(form.searchterm)>
+<cfif not isdefined("url.newId")>
+	<cfset q = application.cfc.Asset.get(form.searchterm)>
+<cfelse>
+	<cfset q = application.cfc.Asset.get(form.searchterm,0)>
+</cfif>
 
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
 
-<script type="text/javascript">
-	function deleteRecord(id,label) {
-		if (confirm("Delete " + label + "?")) {
-			location.href='admin/asset.cfm?id=' + id + '&action=delete'
-		}
-	}
-</script>
-
+<!--- step 2 --->
 
 <h1>
 	Welcome to Proposal Manager
@@ -42,7 +39,6 @@
 		<th>Company</th>
 		<th>Download</th>
 		<th>Edit</th>
-		<th>Del</th>
 	</tr>
 	<cfoutput query="q">
 		<tr>
@@ -61,7 +57,7 @@
 				<a href="admin/asset.cfm?id=#q.id#">[Edit]</a>
 			</td>
 			<td>
-				<a href="javascript:deleteRecord(#q.id#,'#jsStringFormat(q.title)#')">[Del]</a>
+				<!--- step 2 --->
 			</td>
 		</tr>
 	</cfoutput>

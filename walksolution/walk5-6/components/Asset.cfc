@@ -1,23 +1,5 @@
 <cfcomponent hint="CRUD for the Asset Table" output="false">
 
-
-	<cffunction name="deleteRecord" access="public" roles="admin,superadmin" returntype="numeric">
-		
-		<cfargument name="id" type="numeric" required="true">
-		
-		
-		<cfquery>
-			update asset
-			set 
-			endtime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
-			updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">
-			where id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.id#">
-		</cfquery>
-		
-		<cfreturn id>
-		
-	</cffunction>
-
 	<cffunction name="uploadFile" access="public" roles="admin,superadmin" returntype="string">
 		
 		<cfset var stData = {}>
@@ -128,27 +110,32 @@
 
 
 	<cffunction name="get" access="public" returntype="query">
-		<cfargument name="searchterm" required="false" default="">
+		<cfargument name="searchterm" required="false" type="string" default="">
+		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
 		<cfargument name="id" type="numeric" required="false" default="0">
 		
-		<cfquery name="local.q" result="local.stresult">
+		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
+			<cfset arguments.timespan = createtimespan(0,0,0,0)>
+		</cfif>
+		
+		<cfquery name="local.q" cachedwithin="#arguments.timespan#">
 			select 	asset.id, 
 					asset.title,
 					asset.updatedate,
 					company.companyName,
+					asset.filename,
 					assetType.text as assetType,
 					asset.idAssetType,
-					asset.description,
 					asset.idCompany,
-					asset.contentUrl,
-					filename
+					asset.description,
+					asset.contentUrl
 			from	asset join company
 						on asset.idCompany = company.id
 					join assetType
 						on asset.idAssetType = AssetType.id	
 			where 	asset.endtime is null
 			
-			<cfif trim(arguments.searchterm) is not "">
+			<cfif arguments.searchterm is not "">
 				  and match(title,description,fullContent) against (
 				  	<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.searchterm#">
 				  )
@@ -164,15 +151,28 @@
 			
 		</cfquery>
 		
-		<cflog file="downloader" text="#local.stresult.sql#" type="information">
-	
-		
 		<cfreturn local.q>
 		
 	</cffunction>
 	
 	
-	
-
+	<cffunction name="deleteRecord" access="public" roles="admin,superadmin" returntype="struct">
+		<cfargument name="id" type="numeric" required="true">
+		
+		<cfquery>
+			update asset
+			set 
+			endtime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
+			updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">
+			where id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.id#">
+		</cfquery>
+		
+		<cfreturn {
+			  id =  arguments.id,
+			  success = true
+		}> 
+		
+	</cffunction>
 
 </cfcomponent>
+

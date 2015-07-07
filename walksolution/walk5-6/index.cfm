@@ -67,9 +67,4 @@
 	</cfoutput>
 </table>
 
-<input type="button" 
-	value="Add New Document" 
-	onclick="location.href='admin/asset.cfm'">
-
-
 <cfinclude template="#application.basehref#includes/footer.cfm">

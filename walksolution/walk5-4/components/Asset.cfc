@@ -84,7 +84,11 @@
 					asset.updatedate,
 					company.companyName,
 					asset.filename,
-					assetType.text as assetType
+					assetType.text as assetType,
+					asset.idAssetType,
+					asset.idCompany,
+					asset.description,
+					asset.contentUrl
 			from	asset join company
 						on asset.idCompany = company.id
 					join assetType

@@ -16,26 +16,27 @@ Date        Action
 <cfset nav = [
 {
      label="Logout",
-     url = "login/logout.cfm",
+     url = "#application.basehref#login/logout.cfm",
      roles = "admin"
    },
    {
      label = "Add Asset",
-     url = "admin/asset.cfm",
+     url = "#application.basehref#admin/asset.cfm",
      roles = ""
    },
    {
      label = "Companies",
-     url = "admin/companies.cfm",
+     url = "#application.basehref#admin/companies.cfm",
      roles = "admin"
    },
    {
      label = "Home",
-     url = "index.cfm",
+     url = "#application.basehref#index.cfm",
      roles = ""
    }
    
 ]>
+
 
 <cfif isdefined("attributes.pagetitle")>
   <cfset variables.pagetitle = attributes.pagetitle>
@@ -61,7 +62,7 @@ Date        Action
   <nav>
     <cfoutput>
     <cfloop array="#variables.nav#" index="thisLink">
-      <a href="#thislink.url#">#thislink.label#</a>
+      <a href="#application.basehref##thislink.url#">#thislink.label#</a>
     </cfloop>
     </cfoutput>
   </nav>

@@ -8,6 +8,8 @@
 </cfif>
 
 
+<!--- handle record save --->
+
 <cfif isdefined("form.btnSubmit")>
 	
 	<cfif form.id is 0>
@@ -47,11 +49,6 @@
 	<!--- add empty row --->
 	<cfset queryAddRow(qRec)>
 </cfif>
-
-
-
-
-
 
 
 <cfset qCompanies = application.cfc.Company.get()>
@@ -122,3 +119,5 @@
 
 
 <cfinclude template="../includes/footer.cfm">
+
+

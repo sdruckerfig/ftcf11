@@ -2,13 +2,14 @@
 
 	<cffunction name="uploadFile" access="public" roles="admin,superadmin" returntype="string">
 		
+		<cfset var stData = {}>
 		
 		<cffile action="upload"
 			destination="#application.uploaddir#" 
 			filefield="fileupload"
 			accept="image/jpg,image/jpeg"
 			nameconflict="makeunique" 
-			result="local.stData">
+			result="stData">
 		
 		<cfreturn stdata.serverfile>
 		
@@ -22,7 +23,7 @@
 			<cfset local.filespec = application.uploaddir & local.qrec.filename>
 			
 			<cflog file="downloader" 
-			   text="Filespec: #local.filespec#, #local.qrec.filename#, #local.qrec.recordcount#" 
+			   text="Filespec: #local.qrec.filename#, #local.qrec.recordcount#" 
 			   type="information">
 			
 			<cfheader name="Content-Disposition" value="attachment; filename=#local.qrec.filename#">
@@ -40,7 +41,7 @@
 		<cfargument name="contentUrl" required="yes" type="string">
 		<cfargument name="idAssetType" required="yes" type="numeric">
 		
-		<cfif isdefined("form.fileUpload")>
+		<cfif isdefined("form.fileUpload") and form.fileupload is not "">
 			<cfset local.filename = uploadFile()>
 		<cfelse>
 			<cfset local.filename = "">
@@ -68,6 +69,9 @@
 		
 	</cffunction>
 
+
+
+
 	<cffunction name="updateRecord" access="public" roles="admin,superadmin" returntype="Numeric">
 		
 		<cfargument name="id" required="yes" type="numeric">
@@ -83,13 +87,26 @@
 			<cfset local.filename = "">
 		</cfif>
 		
-		<!--- step 17 --->
-	
+		<cfquery result="local.stResult">
+			update Asset 
+			 set 
+			 title = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.title#" >,
+			 <cfif local.filename is not "">
+			 filename = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.filename#">,
+			 </cfif>
+			 idCompany = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idCompany#" >,
+			 description = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.description#">,
+			 contentUrl = 	<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentUrl#">,
+			 idAssetType = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idAssetType#">,
+			 updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">,
+			 updatedate = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
+			 begintime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">
+		  where id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.id#">
+		</cfquery>
 		
 		<cfreturn arguments.id>
 		
 	</cffunction>
-
 
 
 	<cffunction name="get" access="public" returntype="query">
@@ -102,6 +119,7 @@
 		</cfif>
 		
 		<cfquery name="local.q" cachedwithin="#arguments.timespan#">
+			
 			select 	asset.id, 
 					asset.title,
 					asset.updatedate,
@@ -137,5 +155,25 @@
 		<cfreturn local.q>
 		
 	</cffunction>
+	
+	
+	<cffunction name="deleteRecord" access="public" roles="admin,superadmin" returntype="struct">
+		<cfargument name="id" type="numeric" required="true">
+		
+		<cfquery>
+			update asset
+			set 
+			endtime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
+			updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">
+			where id = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.id#">
+		</cfquery>
+		
+		<cfreturn {
+			  id =  arguments.id,
+			  success = true
+		}> 
+		
+	</cffunction>
 
 </cfcomponent>
+
