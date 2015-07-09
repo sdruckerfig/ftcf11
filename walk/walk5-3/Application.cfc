@@ -8,7 +8,7 @@
 	<cffunction name="onApplicationStart">
 		
 		<cfset application.basehref = "/ftcf11/walk/walk5-3/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk5-3.components.">
+		<cfset application.cfcpath = "ftcf11.walk.walk5-3.components.">
 		
 		<cfset application.cfc = structnew()>
 		
