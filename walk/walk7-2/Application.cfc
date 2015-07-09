@@ -1,13 +1,13 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManagerSolution71">
+	<cfset this.name = "ProposalManager">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
-
-	<!--- step 2 --->
+	
 	<cfset this.serialization.serializeQueryAs = "struct">
 
+	<!--- step 2 --->
 	
 	<cffunction name="onApplicationStart">
 		

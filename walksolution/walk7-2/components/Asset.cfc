@@ -1,4 +1,4 @@
-<cfcomponent hint="CRUD for the Asset Table" output="false">
+<cfcomponent hint="CRUD for the Asset Table" output="false" rest="true" restpath="asset">
 
 	<cffunction name="uploadFile" access="private" roles="admin,superadmin" returntype="string">
 		
@@ -109,16 +109,13 @@
 	</cffunction>
 
 
-	<cffunction name="get" access="remote" returntype="query">
-		<cfargument name="searchterm" required="false" type="string" default="">
-		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
-		<cfargument name="id" type="numeric" required="false" default="0">
+	<cffunction name="get" access="remote" returntype="query" httpMethod="GET">
 		
-		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
-			<cfset arguments.timespan = createtimespan(0,0,0,0)>
-		</cfif>
+		<cfargument name="searchterm" required="false" type="string" default="" restargsource="query">
+		<cfargument name="id" type="numeric" required="false" default="0" restargsource="query">
 		
-		<cfquery name="local.q" cachedwithin="#arguments.timespan#">
+		
+		<cfquery name="local.q">
 			select 	asset.id, 
 					asset.title,
 					asset.updatedate,
@@ -155,6 +152,21 @@
 		
 	</cffunction>
 	
+
+	<cffunction name="getdetail" 
+            access="remote"
+            returntype="query"
+            httpMethod="get"
+            restpath="{id}">
+  
+ 		<cfargument name="id" type="string" required="true" restargsource="Path">
+
+ 		<cfset local.q = get(id=arguments.id)>
+
+ 		<cfreturn local.q>
+
+ 	</cffunction>
+
 	
 	<cffunction name="deleteRecord" access="public" roles="admin,superadmin" returntype="struct">
 		<cfargument name="id" type="numeric" required="true">
@@ -173,6 +185,7 @@
 		}> 
 		
 	</cffunction>
+
 
 </cfcomponent>
 

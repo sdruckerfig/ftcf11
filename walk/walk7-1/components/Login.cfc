@@ -29,7 +29,7 @@
   </cffunction>
 
 
-  <cffunction name="login" access="remote" hint="Authenticate User" returntype="boolean" >
+  <cffunction name="login" access="public" hint="Authenticate User" returntype="boolean" >
   	<cfargument name="username" type="string" required="true">
   	<cfargument name="password" type="string" required="true">
   	

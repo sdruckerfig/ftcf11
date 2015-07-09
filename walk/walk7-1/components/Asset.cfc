@@ -33,7 +33,7 @@
 	</cffunction>
 
 
-	<cffunction name="createRecord" access="remote" roles="admin,superadmin" returntype="Numeric">
+	<cffunction name="createRecord" access="public" roles="admin,superadmin" returntype="Numeric">
 		
 		<cfargument name="title" required="yes" type="string">
 		<cfargument name="idCompany" required="yes" type="numeric">
@@ -109,7 +109,7 @@
 	</cffunction>
 
 
-	<cffunction name="get" access="remote" returntype="query">
+	<cffunction name="get" access="public" returntype="query">
 		<cfargument name="searchterm" required="false" type="string" default="">
 		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
 		<cfargument name="id" type="numeric" required="false" default="0">

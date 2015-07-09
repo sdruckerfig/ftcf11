@@ -1,11 +1,14 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManagerSolution71">
+	<cfset this.name = "ProposalManager">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
-
-	<!--- step 2 --->
+	
+	<cfset this.restsettings.autoregister="true"/>
+  	<cfset this.restsettings.servicemapping="proposalmanager"/>
+  	<cfset this.restsettings.usehost=true/>
+	
 	<cfset this.serialization.serializeQueryAs = "struct">
 
 	

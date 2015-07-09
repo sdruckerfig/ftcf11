@@ -2,6 +2,7 @@
 
 <cfif isdefined("form.btnSubmit")>
 	
+	<!--- step 21 --->
 	<cfset newId = application.cfc.Asset.createRecord(
 		title = form.title,
 		idCompany = form.idCompany,
@@ -31,10 +32,11 @@
 
 <cfinclude template="../includes/header.cfm">
 
-
 	<h1>Create/Edit Asset</h1>
 
 	<cfform enctype="multipart/form-data">
+		
+		<!--- step 8 --->
 		
 		<label for="title">Title:</label>
 		<cfinput type="text" name="title" required="true">

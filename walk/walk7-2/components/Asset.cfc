@@ -110,15 +110,12 @@
 
 
 	<cffunction name="get" access="remote" returntype="query">
+		
 		<cfargument name="searchterm" required="false" type="string" default="">
-		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
 		<cfargument name="id" type="numeric" required="false" default="0">
 		
-		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
-			<cfset arguments.timespan = createtimespan(0,0,0,0)>
-		</cfif>
 		
-		<cfquery name="local.q" cachedwithin="#arguments.timespan#">
+		<cfquery name="local.q">
 			select 	asset.id, 
 					asset.title,
 					asset.updatedate,
@@ -154,7 +151,7 @@
 		<cfreturn local.q>
 		
 	</cffunction>
-	
+
 	
 	<cffunction name="deleteRecord" access="public" roles="admin,superadmin" returntype="struct">
 		<cfargument name="id" type="numeric" required="true">
@@ -173,6 +170,7 @@
 		}> 
 		
 	</cffunction>
+
 
 </cfcomponent>
 

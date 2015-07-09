@@ -1,17 +1,20 @@
 <cfparam name="form.searchterm" default="">
 
 
-<cfif not isdefined("url.newId")>
-	<cfset q = application.cfc.Asset.get(form.searchterm)>
-<cfelse>
-	<cfset q = application.cfc.Asset.get(form.searchterm,0)>
-</cfif>
+<cfset q = application.cfc.Asset.get(form.searchterm)>
 
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
 
-<!--- step 2 --->
+<script type="text/javascript">
+	function deleteRecord(id,label) {
+		if (confirm("Delete " + label + "?")) {
+			location.href='admin/asset.cfm?id=' + id + '&action=delete'
+		}
+	}
+</script>
+
 
 <h1>
 	Welcome to Proposal Manager
@@ -31,6 +34,7 @@
 	<cfinput name="btnSubmit" type="submit" value="Search">
 </cfform>
 
+<cfsavecontent variable="pagecontent">
 <table border="1">
 	<tr>
 		<th>Updated</th>
@@ -39,6 +43,7 @@
 		<th>Company</th>
 		<th>Download</th>
 		<th>Edit</th>
+		<th>Del</th>
 	</tr>
 	<cfoutput query="q">
 		<tr>
@@ -57,11 +62,35 @@
 				<a href="admin/asset.cfm?id=#q.id#">[Edit]</a>
 			</td>
 			<td>
-				<!--- step 7 --->
+				<a href="javascript:deleteRecord(#q.id#,'#jsStringFormat(q.title)#')">[Del]</a>
 			</td>
 		</tr>
 	</cfoutput>
 </table>
+</cfsavecontent>
+
+<cfif not isdefined("url.print")>
+	<cfoutput>#variables.pagecontent#</cfoutput>
+<cfelse>
+	<!---
+	<cfhtmltopdf source="http://www.figleaf.com">
+	  <cfoutput>#variables.pagecontent#</cfoutput>
+	</cfhtmltopdf>
+	--->
+	<cfhtmltopdf>
+	 	<cfoutput>#variables.pagecontent#</cfoutput>
+	</cfhtmltopdf>
+	<cfabort>
+</cfif>
+
+
+<input type="button" 
+	value="Print" 
+	onclick="location.href='index.cfm?print'">
+
+<input type="button" 
+	value="Download" 
+	onclick="location.href='index.cfm?excel'">
 
 
 <cfinclude template="#application.basehref#includes/footer.cfm">
