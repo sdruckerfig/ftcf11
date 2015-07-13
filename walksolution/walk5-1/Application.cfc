@@ -9,6 +9,7 @@
 		
 		<cfset application.basehref = "/ftcf11/walksolution/walk5-1/">
 		<cfset application.cfcpath = "ftcf11.walksolution.walk5-1.components.">
+		<cfset application.cssHref = "/ftcf11/shared/css/">
 		
 		<cfset application.cfc = structnew()>
 		

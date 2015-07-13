@@ -48,12 +48,6 @@
 	<cfset queryAddRow(qRec)>
 </cfif>
 
-
-
-
-
-
-
 <cfset qCompanies = application.cfc.Company.get()>
 <cfset qAssetTypes = application.cfc.AssetType.get()>
 

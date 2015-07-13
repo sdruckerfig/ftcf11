@@ -69,7 +69,7 @@
 		<br />
 			
 		
-		<label for="description">Description:</label>
+		<label for="description">Description:</label><br />
 		<cftextarea name="description"></cftextarea>
 		<br />
 		

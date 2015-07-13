@@ -14,20 +14,20 @@ Date        Action
 --->
 
 <cfset nav = [
-{
+   {
      label="Logout",
      url = "login/logout.cfm",
-     roles = "admin"
+     roles = "user,admin,superadmin"
    },
    {
      label = "Add Asset",
      url = "admin/asset.cfm",
-     roles = ""
+     roles = "admin,superadmin"
    },
    {
      label = "Companies",
      url = "admin/companies.cfm",
-     roles = "admin"
+     roles = "superadmin"
    },
    {
      label = "Home",
@@ -50,9 +50,10 @@ Date        Action
       <cfoutput>#variables.pagetitle#</cfoutput>
      </cfif>
    </title>
-
+   <cfoutput>
    <link rel="stylesheet" type="text/css" 
-       href="/ftcf11/shared/css/Application.css" />
+       href="#application.cssHref#Application.css" />
+  </cfoutput>
   </head>
   <body>
     <!-- app menu will go here -->
@@ -60,8 +61,13 @@ Date        Action
     <h1>Proposal Manager</h1>
   <nav>
     <cfoutput>
+    <cfif getAuthUser() is "">
+      <a href="#application.basehref#login/index.cfm">Login</a>
+    </cfif>
     <cfloop array="#variables.nav#" index="thisLink">
+      <cfif thisLink.roles is "" or isUserInAnyRole(thisLink.roles)>
       <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+      </cfif>
     </cfloop>
     </cfoutput>
   </nav>

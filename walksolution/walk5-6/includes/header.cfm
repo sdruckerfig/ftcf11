@@ -14,29 +14,28 @@ Date        Action
 --->
 
 <cfset nav = [
-{
+   {
      label="Logout",
-     url = "#application.basehref#login/logout.cfm",
-     roles = "admin"
+     url = "login/logout.cfm",
+     roles = "user,admin,superadmin"
    },
    {
      label = "Add Asset",
-     url = "#application.basehref#admin/asset.cfm",
-     roles = ""
+     url = "admin/asset.cfm",
+     roles = "admin,superadmin"
    },
    {
      label = "Companies",
-     url = "#application.basehref#admin/companies.cfm",
-     roles = "admin"
+     url = "admin/companies.cfm",
+     roles = "superadmin"
    },
    {
      label = "Home",
-     url = "#application.basehref#index.cfm",
+     url = "index.cfm",
      roles = ""
    }
    
 ]>
-
 
 <cfif isdefined("attributes.pagetitle")>
   <cfset variables.pagetitle = attributes.pagetitle>
@@ -51,9 +50,10 @@ Date        Action
       <cfoutput>#variables.pagetitle#</cfoutput>
      </cfif>
    </title>
-
+   <cfoutput>
    <link rel="stylesheet" type="text/css" 
-       href="/ftcf11/shared/css/Application.css" />
+       href="#application.cssHref#Application.css" />
+  </cfoutput>
   </head>
   <body>
     <!-- app menu will go here -->
@@ -61,8 +61,13 @@ Date        Action
     <h1>Proposal Manager</h1>
   <nav>
     <cfoutput>
+    <cfif getAuthUser() is "">
+      <a href="#application.basehref#login/index.cfm">Login</a>
+    </cfif>
     <cfloop array="#variables.nav#" index="thisLink">
+      <cfif thisLink.roles is "" or isUserInAnyRole(thisLink.roles)>
       <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+      </cfif>
     </cfloop>
     </cfoutput>
   </nav>

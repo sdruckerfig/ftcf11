@@ -1,73 +1,80 @@
+<!---
+File   : header.cfm
+Purpose: Navigation control
+By     : Steve Drucker
+Created: 04/17/2015
+
+Usage:
+Invoke at the top of a CFM by using <cfinclude>
+
+Modification Log:
+Date        Action
+=============================================
+04/18/2015  Created
+--->
+
 <cfset nav = [
    {
-  	 label = "Content Assets",
-  	 url = "assets/assets.cfm",
-  	 roles = ""
+     label="Logout",
+     url = "login/logout.cfm",
+     roles = "user,admin,superadmin"
    },
    {
-   	 label = "Companies",
-   	 url = "admin/companies.cfm",
-   	 roles = "admin"
+     label = "Add Asset",
+     url = "admin/asset.cfm",
+     roles = "admin,superadmin"
    },
    {
-   	 label="Logout",
-   	 url = "login/logout.cfm",
-   	 roles = ""
+     label = "Companies",
+     url = "admin/companies.cfm",
+     roles = "superadmin"
+   },
+   {
+     label = "Home",
+     url = "index.cfm",
+     roles = ""
    }
+   
 ]>
 
+<cfif isdefined("attributes.pagetitle")>
+  <cfset variables.pagetitle = attributes.pagetitle>
+</cfif>
 
 <doctype html>
 <html>
-	<head>
-		<title></title>
-		<style>
-			
-			body {
-				font-family: Arial;	
-			}
-			
-			nav {
-				height: 25px;
-				background-color: silver;
-			}
-			
-			nav > span {
-				display: inline-block;
-				text-align: center;
-				width: 125px;
-				height: 23px;
-				border: 1px solid black;
-				float: right;
-			}
-			
-			label {
-				display: block;
-				width: 100px;
-				float: left;
-			}
-			
-			br {
-				clear: all;
-			}
-			
-			input, textarea, select {
-				width: 200px;
-				margin-bottom: 10px;
-			}
-		</style>
-	</head>
-	<body>
-		<h1>Proposal Manager</h1>
-		<nav>
-			<cfoutput>
-			<cfloop array="#variables.nav#" index="thisLink">
-				<span onclick="location.href='#application.basehref##thislink.url#'">
-					#thislink.label#
-				</span>
-			</cfloop>
-			</cfoutput>
-		</nav>
-		
-		
-	
+  <head>
+  <title>
+   <!--- insert dynamic title here --->
+     <cfif isdefined("variables.pagetitle")>
+      <cfoutput>#variables.pagetitle#</cfoutput>
+     </cfif>
+   </title>
+   <cfoutput>
+   <link rel="stylesheet" type="text/css" 
+       href="#application.cssHref#Application.css" />
+  </cfoutput>
+  </head>
+  <body>
+    <!-- app menu will go here -->
+    <header>
+    <h1>Proposal Manager</h1>
+  <nav>
+    <cfoutput>
+    <cfif getAuthUser() is "">
+      <a href="#application.basehref#login/index.cfm">Login</a>
+    </cfif>
+    <cfloop array="#variables.nav#" index="thisLink">
+      <cfif thisLink.roles is "" or isUserInAnyRole(thisLink.roles)>
+      <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+      </cfif>
+    </cfloop>
+    </cfoutput>
+  </nav>
+  </header>
+
+  <main>
+  <cfif isdefined("variables.pagetitle")>
+    <cfoutput><h2>#variables.pagetitle#</h2></cfoutput>
+  </cfif>
+

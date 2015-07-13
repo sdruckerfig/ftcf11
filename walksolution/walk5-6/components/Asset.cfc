@@ -112,7 +112,7 @@
 	<cffunction name="get" access="public" returntype="query">
 		<cfargument name="searchterm" required="false" type="string" default="">
 		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
-		<cfargument name="id" type="numeric" required="false" default="0">
+		<cfargument name="id" type="numeric" required="false" default="-1">
 		
 		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
 			<cfset arguments.timespan = createtimespan(0,0,0,0)>
@@ -141,7 +141,7 @@
 				  )
 			</cfif>
 			
-			<cfif arguments.id gt 0>
+			<cfif arguments.id gt -1>
 				and asset.id = <cfqueryparam 
 								cfsqltype="cf_sql_numeric"
 								value="#arguments.id#">

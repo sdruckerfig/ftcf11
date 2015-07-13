@@ -14,61 +14,67 @@ Date        Action
 --->
 
 <cfset nav = [
-{
-   	 label="Logout",
-   	 url = "login/logout.cfm",
-   	 roles = ""
+   {
+     label="Logout",
+     url = "login/logout.cfm",
+     roles = "user,admin,superadmin"
    },
    {
-  	 label = "Add Asset",
-  	 url = "admin/asset.cfm",
-  	 roles = ""
+     label = "Add Asset",
+     url = "admin/asset.cfm",
+     roles = "admin,superadmin"
    },
    {
-   	 label = "Companies",
-   	 url = "admin/companies.cfm",
-   	 roles = "admin"
+     label = "Companies",
+     url = "admin/companies.cfm",
+     roles = "superadmin"
    },
    {
-     label="Home",
-     url = "/index.cfm",
+     label = "Home",
+     url = "index.cfm",
      roles = ""
    }
    
 ]>
 
 <cfif isdefined("attributes.pagetitle")>
-	<cfset variables.pagetitle = attributes.pagetitle>
+  <cfset variables.pagetitle = attributes.pagetitle>
 </cfif>
 
 <doctype html>
 <html>
-	<head>
-	<title>
-	 <!--- insert dynamic title here --->
+  <head>
+  <title>
+   <!--- insert dynamic title here --->
      <cfif isdefined("variables.pagetitle")>
-     	<cfoutput>#variables.pagetitle#</cfoutput>
+      <cfoutput>#variables.pagetitle#</cfoutput>
      </cfif>
    </title>
-
+   <cfoutput>
    <link rel="stylesheet" type="text/css" 
-	     href="/ftcf11/shared/css/Application.css" />
-	</head>
-	<body>
+       href="#application.cssHref#Application.css" />
+  </cfoutput>
+  </head>
+  <body>
     <!-- app menu will go here -->
     <header>
     <h1>Proposal Manager</h1>
-	<nav>
-		<cfoutput>
-		<cfloop array="#variables.nav#" index="thisLink">
-			<a href="#application.basehref##thislink.url#">#thislink.label#</a>
-		</cfloop>
-		</cfoutput>
-	</nav>
-	</header>
+  <nav>
+    <cfoutput>
+    <cfif getAuthUser() is "">
+      <a href="#application.basehref#login/index.cfm">Login</a>
+    </cfif>
+    <cfloop array="#variables.nav#" index="thisLink">
+      <cfif thisLink.roles is "" or isUserInAnyRole(thisLink.roles)>
+      <a href="#application.basehref##thislink.url#">#thislink.label#</a>
+      </cfif>
+    </cfloop>
+    </cfoutput>
+  </nav>
+  </header>
 
-	<main>
-	<cfif isdefined("variables.pagetitle")>
-		<cfoutput><h2>#variables.pagetitle#</h2></cfoutput>
-	</cfif>
+  <main>
+  <cfif isdefined("variables.pagetitle")>
+    <cfoutput><h2>#variables.pagetitle#</h2></cfoutput>
+  </cfif>
 

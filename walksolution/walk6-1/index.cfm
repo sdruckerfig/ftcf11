@@ -6,6 +6,16 @@
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
+<cfif isdefined("url.newId")>
+	<cfoutput>
+	<style>
+		##asset#url.newId# {
+			background-color: yellow;
+		}
+	</style>
+	</cfoutput>
+</cfif>
+
 
 <script type="text/javascript">
 	function deleteRecord(id,label) {
@@ -34,7 +44,6 @@
 	<cfinput name="btnSubmit" type="submit" value="Search">
 </cfform>
 
-<cfsavecontent variable="pagecontent">
 <table border="1">
 	<tr>
 		<th>Updated</th>
@@ -46,16 +55,22 @@
 		<th>Del</th>
 	</tr>
 	<cfoutput query="q">
-		<tr>
+		<tr id="asset#q.id#">
 			<td>#dateFormat(q.updatedate)#</td>
 			<td>#q.title#</td>
 			<td>#q.assetType#</td>
 			<td>#q.companyName#</td>
 			<td>
-				<cfif q.filename is not "">
-					<a href="components/asset.cfc?method=downloadfile&id=#id#">
-					[download]
+				<cfif assetType is "Bio">
+					<a href="components/asset.cfc?method=downloadBioPDFfile&id=#id#">
+						[download Bio PDF]
 					</a>
+				<cfelse>
+					<cfif q.filename is not "">
+						<a href="components/asset.cfc?method=downloadfile&id=#id#">
+						[download]
+						</a>
+					</cfif>
 				</cfif>
 			</td>
 			<td>
@@ -67,29 +82,6 @@
 		</tr>
 	</cfoutput>
 </table>
-</cfsavecontent>
-
-<cfif not isdefined("url.print")>
-	<cfoutput>#variables.pagecontent#</cfoutput>
-<cfelse>
-	<!---
-	<cfhtmltopdf source="http://www.figleaf.com">
-	  <cfoutput>#variables.pagecontent#</cfoutput>
-	</cfhtmltopdf>
-	--->
-	<cfhtmltopdf>
-	 	<cfoutput>#variables.pagecontent#</cfoutput>
-	</cfhtmltopdf>
-	<cfabort>
-</cfif>
-
-<input type="button" 
-	value="Add New Document" 
-	onclick="location.href='admin/asset.cfm'">
-
-<input type="button" 
-	value="Print" 
-	onclick="location.href='index.cfm?print'">
 
 
 <cfinclude template="#application.basehref#includes/footer.cfm">

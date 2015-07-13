@@ -10,6 +10,15 @@
 
 <cfinclude template="#application.basehref#includes/header.cfm">
 
+<cfif isdefined("url.newId")>
+	<cfoutput>
+	<style>
+		##asset#url.newId# {
+			background-color: yellow;
+		}
+	</style>
+	</cfoutput>
+</cfif>
 
 <h1>
 	Welcome to Proposal Manager
@@ -39,7 +48,7 @@
 		<th>Edit</th>
 	</tr>
 	<cfoutput query="q">
-		<tr>
+		<tr id="asset#q.id#">
 			<td>#dateFormat(q.updatedate)#</td>
 			<td>#q.title#</td>
 			<td>#q.assetType#</td>

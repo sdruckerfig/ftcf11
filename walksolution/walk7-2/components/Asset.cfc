@@ -112,7 +112,7 @@
 	<cffunction name="get" access="remote" returntype="query" httpMethod="GET">
 		
 		<cfargument name="searchterm" required="false" type="string" default="" restargsource="query">
-		<cfargument name="id" type="numeric" required="false" default="0" restargsource="query">
+		<cfargument name="id" type="numeric" required="false" default="-1" restargsource="query">
 		
 		
 		<cfquery name="local.q">
@@ -138,7 +138,7 @@
 				  )
 			</cfif>
 			
-			<cfif arguments.id gt 0>
+			<cfif arguments.id gt -1>
 				and asset.id = <cfqueryparam 
 								cfsqltype="cf_sql_numeric"
 								value="#arguments.id#">

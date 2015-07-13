@@ -85,7 +85,7 @@
 		
 		
 		
-		<label for="idCompany">Company:</label>
+		<label for="idCompany">Company:</label> <br />
 		
 		<cfselect 
 			name="idCompany"

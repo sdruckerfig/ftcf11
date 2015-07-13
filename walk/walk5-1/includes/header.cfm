@@ -14,7 +14,7 @@ Date        Action
 --->
 
 <cfset nav = [
-{
+   {
      label="Logout",
      url = "login/logout.cfm",
      roles = "user,admin,superadmin"
@@ -22,7 +22,7 @@ Date        Action
    {
      label = "Add Asset",
      url = "admin/asset.cfm",
-     roles = ""
+     roles = "admin,superadmin"
    },
    {
      label = "Companies",
@@ -61,6 +61,9 @@ Date        Action
     <h1>Proposal Manager</h1>
   <nav>
     <cfoutput>
+    <cfif getAuthUser() is "">
+      <a href="#application.basehref#login/index.cfm">Login</a>
+    </cfif>
     <cfloop array="#variables.nav#" index="thisLink">
       <cfif thisLink.roles is "" or isUserInAnyRole(thisLink.roles)>
       <a href="#application.basehref##thislink.url#">#thislink.label#</a>

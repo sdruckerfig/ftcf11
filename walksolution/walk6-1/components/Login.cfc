@@ -6,7 +6,13 @@
   	
   	<cflogin>
   		<!--- do database authentication here --->
-  		
+  		<cfstoredproc procedure="authenticate">
+        <cfprocparam type="in" cfsqltype="cf_sql_varchar" value="#arguments.username#">
+        <cfprocparam type="in" cfsqltype="cf_sql_varchar" value="#arguments.password#">
+        <cfprocresult name="local.q" resultset="1">
+      </cfstoredproc>
+      
+      <!---
   		<cfquery name="local.q">
   			select Appuser.*, UserRole.label as roleName 
   			from AppUser inner join UserRole
@@ -17,6 +23,7 @@
   			and 
   			  password = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.password#">
   		</cfquery>
+      --->
   		
   		<cfif local.q.recordCount is 1>
 	  		<cfloginuser 
