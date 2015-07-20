@@ -225,52 +225,7 @@
 		
 	</cffunction>
 
-	<cffunction name="downloadspreadsheet" access="remote" returntype="void">
-		<cfargument name="searchterm" type="string" required="false" default="">
-
-		<cfset local.q = get(arguments.searchterm)>
-		<cfset local.sObj = spreadsheetNew()>
-		<cfset local.colNum = 1>
-
-		<!--- define header row --->
-		<cfset SpreadsheetAddRow(sObj, local.q.columnlist, 1)>
-		<cfloop from="1" to="#listlen(local.q.columnlist)#" index="local.i">
-			<cfset spreadsheetFormatCell(
-				local.sObj,
-				{
-					bold="true",
-					alignment="center"
-				},
-				1,
-				local.i
-			)>
-		</cfloop>
-
-		<cfloop from="1" to="#local.q.recordcount#" index="local.i">
-			<cfset local.colNum = 1>
-			<cfloop list="#local.q.columnlist#" index="thisCol">
-				<cfset spreadsheetSetCellValue(
-					local.sObj,
-					local.q[thisCol][local.i],
-					local.i + 1,
-					local.colNum
-				)>
-				<cfset local.colNum++>
-			</cfloop>
-		</cfloop>
-
-		<cfset local.filename = application.pdfGenDir & "/" & createUUID() & ".xls">
-		<cfspreadsheet
-			 action="write"
-			 filename = "#local.filename#"
-			 name = "local.sobj" 
-			 overwrite = "true"
-			 sheetname = "Assets" >
-
-		<cfheader name="Content-Disposition" value="attachment; filename=Assets.xls">
-		<cfcontent file="#local.filename#" deletefile="true">
-
-	</cffunction>
+	<!--- walkthrough 6-2 starts here --->
 
 </cfcomponent>
 

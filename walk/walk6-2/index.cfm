@@ -83,8 +83,7 @@
 	</cfoutput>
 </table>
 
-<cfoutput>
-<input type="button" value="Download List" onClick="location.href='components/asset.cfc?method=downloadspreadsheet&searchterm=#urlencodedformat(form.searchterm)#'">
-</cfoutput>
+<!--- walkthrough 6-2 starts here --->
+
 
 <cfinclude template="#application.basehref#includes/footer.cfm">
