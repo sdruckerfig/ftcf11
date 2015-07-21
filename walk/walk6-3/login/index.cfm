@@ -1,22 +1,13 @@
 <cfinclude template="../includes/header.cfm">
 
 
-<cfif isdefined("url.email")>
-	
-	<cfset sentEmail = application.cfc.Login.sendPassword(url.email)>
-	
-	<cfoutput><h3>Reminder email sent!</h3></cfoutput>
-	
-</cfif>
+<!--- step 10 --->
 
-<script type="text/javascript">
-	function forgotPassword() {
-		var email = window.prompt("Enter your email address");
-		if (email) {
-			location.href = 'index.cfm?email=' + escape(email);
-		}
-	}
-</script>
+
+
+<!--- step 3 --->
+
+
 
 
 <cfif isdefined("form.username")>
@@ -45,8 +36,9 @@
 	<br />
 	
 	<cfinput type="submit" name="btnSubmit" value="Authenticate!">
-	<input type="button" value="Forgot Password" onclick="forgotPassword()">
-		
+	
+	<!--- step 2 --->
+
 </cfform>
 
 

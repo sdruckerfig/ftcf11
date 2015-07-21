@@ -48,33 +48,9 @@
   	
   </cffunction>
 
-  <cffunction name="sendPassword" access="public" hint="password reminder" returntype="boolean">
-    <cfargument name="email" type="string" required="true">
-    
-    <cfquery name="local.q">
-      select password
-      from appuser
-      where email = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#">
-      and endtime is null
-    </cfquery>
-    
-    <cfif local.q.recordcount ge 1>
-      <cfmail 
-         from="info@figleaf.com"
-         to="sdrucker@figleaf.com"
-         subject="Password Reminder"
-         type="html">
-         
-         <p>Your password is #local.q.password#</p>
-         
-      </cfmail>
-      <cfreturn true>
-    <cfelse>
-      <cfreturn false>
-    </cfif>
-    
-    
-  </cffunction>
+
+  <!--- step 13 --->
+
   
 
 </cfcomponent>
