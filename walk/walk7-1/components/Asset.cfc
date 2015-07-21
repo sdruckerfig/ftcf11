@@ -1,6 +1,6 @@
 <cfcomponent hint="CRUD for the Asset Table" output="false">
 
-	<cffunction name="uploadFile" access="private" roles="admin,superadmin" returntype="string">
+	<cffunction name="uploadFile" access="public" roles="admin,superadmin" returntype="string">
 		
 		<cfset var stData = {}>
 		
@@ -40,6 +40,7 @@
 		<cfargument name="description" required="yes" type="string">
 		<cfargument name="contentUrl" required="yes" type="string">
 		<cfargument name="idAssetType" required="yes" type="numeric">
+		<cfargument name="fullContent" required="no" type="string" default="">
 		
 		<cfif isdefined("form.fileUpload") and form.fileupload is not "">
 			<cfset local.filename = uploadFile()>
@@ -49,7 +50,7 @@
 		
 		<cfquery result="local.stResult">
 			insert into Asset (
-				filename, title, idCompany, description, contentUrl, idAssetType, updateuser, updatedate, begintime
+				filename, title, idCompany, description, contentUrl, idAssetType, fullContent,updateuser, updatedate, begintime
 			)
 			values (
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#local.filename#">,
@@ -58,6 +59,7 @@
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.description#">,
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentUrl#">,
 				<cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idAssetType#">,
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fullContent#">,
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">,
 				<cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
 				<cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">
@@ -80,6 +82,7 @@
 		<cfargument name="description" required="yes" type="string">
 		<cfargument name="contentUrl" required="yes" type="string">
 		<cfargument name="idAssetType" required="yes" type="numeric">
+		<cfargument name="fullContent" required="no" type="string" default="">
 		
 		<cfif isdefined("form.fileUpload") and form.fileupload is not "">
 			<cfset local.filename = uploadFile()>
@@ -98,6 +101,7 @@
 			 description = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.description#">,
 			 contentUrl = 	<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentUrl#">,
 			 idAssetType = <cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.idAssetType#">,
+			 fullContent = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.fullContent#">,
 			 updateuser = <cfqueryparam cfsqltype="cf_sql_varchar" value="#getAuthUser()#">,
 			 updatedate = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">,
 			 begintime = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#">
@@ -112,7 +116,7 @@
 	<cffunction name="get" access="public" returntype="query">
 		<cfargument name="searchterm" required="false" type="string" default="">
 		<cfargument name="timespan" default="#createtimespan(0,0,1,0)#">
-		<cfargument name="id" type="numeric" required="false" default="0">
+		<cfargument name="id" type="numeric" required="false" default="-1">
 		
 		<cfif isdefined("url.init") or trim(arguments.searchterm) is not "" or arguments.id gt 0>
 			<cfset arguments.timespan = createtimespan(0,0,0,0)>
@@ -128,7 +132,8 @@
 					asset.idAssetType,
 					asset.idCompany,
 					asset.description,
-					asset.contentUrl
+					asset.contentUrl,
+					asset.fullContent
 			from	asset join company
 						on asset.idCompany = company.id
 					join assetType
@@ -141,7 +146,7 @@
 				  )
 			</cfif>
 			
-			<cfif arguments.id gt 0>
+			<cfif arguments.id gt -1>
 				and asset.id = <cfqueryparam 
 								cfsqltype="cf_sql_numeric"
 								value="#arguments.id#">
@@ -172,6 +177,99 @@
 			  success = true
 		}> 
 		
+	</cffunction>
+
+	<cffunction name="downloadBioPDFFile" access="remote" returntype="void">
+		
+			<cfargument name="id" type="numeric" required="true">
+			<!--- Grab content to use in generating PDF--->
+			<cfset local.qrec = get(id=arguments.id)>
+			<!--- Create a filename for the PDF --->
+			<cfset local.filespec = application.PDFGenDir & replacenocase(local.qrec.title," ","_","all") & ".pdf">
+			<!--- Create a structure to hold data to be passed into cfdocumentitem --->
+			<cfset local.stqRec = StructNew()>
+			<cfset local.stqRec.Title = local.qrec.title>
+			
+			<!--- Log each created PDF --->
+			<cflog file="biopdfdownloader" 
+			   text="Filespec: #local.filespec#" 
+			   type="information">
+			   
+			<!--- Walk 6-1 Part 1 (Generate the tag) --->   
+			<!--- Walk 6-1 Part 2 (Add a header and footer)  
+			<cfdocument format="PDF" filename="#local.filespec#" overwrite="true">
+				<cfdocumentitem type="header" attributecollection="#local.stqRec#">
+				<cfoutput><b>#attributes.title#</b></cfoutput>
+				</cfdocumentitem>
+				<cfdocumentitem type="footer">
+					Copyright &copy; Fig Leaf Software
+				</cfdocumentitem>
+				<cfoutput>#local.qrec.fullContent#</cfoutput>
+			</cfdocument>---> 
+			
+			<!--- Walk 6-1 Part 3 (Create the PDF using CFHTMLTOPDF) --->  
+			<cfhtmltopdf destination="#local.filespec#" margintop="1" marginleft=".5" marginright=".5" overwrite="true">
+				<cfhtmltopdfitem type="header" marginleft=".6" marginbottom=".5" align="Left" attributecollection="#local.stqRec#">
+				  <cfoutput><b>#attributes.title#</b></cfoutput>
+				</cfhtmltopdfitem>
+				<cfhtmltopdfitem type="footer" marginleft=".5" align="Left">
+				    Copyright Fig Leaf Software
+				</cfhtmltopdfitem>
+				<cfoutput>#local.qrec.fullContent#</cfoutput>
+			</cfhtmltopdf>
+			
+			<!--- Return the newly created PDF --->
+			<cfheader name="Content-Disposition" value="attachment; filename=#local.filespec#">
+			<cfcontent file="#local.filespec#">
+			
+		
+	</cffunction>
+
+	<cffunction name="downloadspreadsheet" access="remote" returntype="void">
+		<cfargument name="searchterm" type="string" required="false" default="">
+
+		<cfset local.q = get(arguments.searchterm)>
+		<cfset local.sObj = spreadsheetNew()>
+		<cfset local.colNum = 1>
+
+		<!--- define header row --->
+		<cfset SpreadsheetAddRow(sObj, local.q.columnlist, 1)>
+		<cfloop from="1" to="#listlen(local.q.columnlist)#" index="local.i">
+			<cfset spreadsheetFormatCell(
+				local.sObj,
+				{
+					bold="true",
+					alignment="center"
+				},
+				1,
+				local.i
+			)>
+		</cfloop>
+
+		<cfloop from="1" to="#local.q.recordcount#" index="local.i">
+			<cfset local.colNum = 1>
+			<cfloop list="#local.q.columnlist#" index="thisCol">
+				<cfset spreadsheetSetCellValue(
+					local.sObj,
+					local.q[thisCol][local.i],
+					local.i + 1,
+					local.colNum
+				)>
+				<cfset local.colNum++>
+			</cfloop>
+		</cfloop>
+
+		<cfset local.filename = application.pdfGenDir & "/" & createUUID() & ".xls">
+		<cfspreadsheet
+			 action="write"
+			 filename = "#local.filename#"
+			 name = "local.sobj" 
+			 overwrite = "true"
+			 sheetname = "Assets" >
+
+		<cfheader name="Content-Disposition" value="attachment; filename=Assets.xls">
+		<cfcontent file="#local.filename#" deletefile="true">
+
 	</cffunction>
 
 </cfcomponent>

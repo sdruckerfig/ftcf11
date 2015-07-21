@@ -4,16 +4,16 @@
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
-
-	<!--- step 2 --->
 	
-
+	<!--- step 2 --->
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk7-1/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk7-1.components.">
+		<cfset application.basehref = "/ftcf11/walk/walk7-1/">
+		<cfset application.cfcpath = "ftcf11.walk.walk7-1.components.">
+		<cfset application.cssHref = "/ftcf11/shared/css/">
 		<cfset application.uploadDir = expandpath('.') & "/../../data">
+		<cfset application.PDFGenDir = expandpath('.') & "/generatedpdfs/">
 		
 		<cfset application.cfc = structnew()>
 		
@@ -37,7 +37,7 @@
 			<cfset onSessionStart()>
 		</cfif> 
 		
-		<cfif not isUserInRole("SuperAdmin") and
+		<cfif not isUserInAnyRole("SuperAdmin,Admin") and
 			  arguments.targetpage contains "/admin/">
 			  
 			  <cflocation url="#application.basehref#login/index.cfm">

@@ -16,6 +16,7 @@
 	</cfoutput>
 </cfif>
 
+
 <script type="text/javascript">
 	function deleteRecord(id,label) {
 		if (confirm("Delete " + label + "?")) {
@@ -43,7 +44,6 @@
 	<cfinput name="btnSubmit" type="submit" value="Search">
 </cfform>
 
-<cfsavecontent variable="pagecontent">
 <table border="1">
 	<tr>
 		<th>Updated</th>
@@ -61,10 +61,16 @@
 			<td>#q.assetType#</td>
 			<td>#q.companyName#</td>
 			<td>
-				<cfif q.filename is not "">
-					<a href="components/asset.cfc?method=downloadfile&id=#id#">
-					[download]
+				<cfif assetType is "Bio">
+					<a href="components/asset.cfc?method=downloadBioPDFfile&id=#id#">
+						[download Bio PDF]
 					</a>
+				<cfelse>
+					<cfif q.filename is not "">
+						<a href="components/asset.cfc?method=downloadfile&id=#id#">
+						[download]
+						</a>
+					</cfif>
 				</cfif>
 			</td>
 			<td>
@@ -76,30 +82,9 @@
 		</tr>
 	</cfoutput>
 </table>
-</cfsavecontent>
 
-<cfif not isdefined("url.print")>
-	<cfoutput>#variables.pagecontent#</cfoutput>
-<cfelse>
-	<!---
-	<cfhtmltopdf source="http://www.figleaf.com">
-	  <cfoutput>#variables.pagecontent#</cfoutput>
-	</cfhtmltopdf>
-	--->
-	<cfhtmltopdf>
-	 	<cfoutput>#variables.pagecontent#</cfoutput>
-	</cfhtmltopdf>
-	<cfabort>
-</cfif>
-
-
-<input type="button" 
-	value="Print" 
-	onclick="location.href='index.cfm?print'">
-
-<input type="button" 
-	value="Download" 
-	onclick="location.href='index.cfm?excel'">
-
+<cfoutput>
+<input type="button" value="Download List" onClick="location.href='components/asset.cfc?method=downloadspreadsheet&searchterm=#urlencodedformat(form.searchterm)#'">
+</cfoutput>
 
 <cfinclude template="#application.basehref#includes/footer.cfm">

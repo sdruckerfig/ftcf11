@@ -39,7 +39,7 @@
 			<cfset onSessionStart()>
 		</cfif> 
 		
-		<cfif not isUserInRole("superadmin") and
+		<cfif not isUserInAnyRole("superadmin,admin") and
 			  arguments.targetpage contains "/admin/">
 			  
 			  <cflocation url="#application.basehref#login/index.cfm">

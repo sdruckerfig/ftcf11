@@ -1,39 +1,16 @@
-<!---
-File   : footer.cfm
-Purpose: Common Footer
-By     : Steve Drucker
-Created: 04/17/2015
+<hr>
+<cfset today = now()>
 
-Usage:
-Invoke at the bottom of a CFM by using <cfinclude>
+<cfset r = randrange(0,255)>
+<cfset g = randrange(0,255)>
+<cfset b = randrange(0,255)>
 
-Modification Log:
-Date        Action
-=============================================
-04/18/2015  Created
---->
-</main>
-
-<footer>
-	<hr />
-	<cfset today = now()>
-
-	<cfset r = randrange(0,255)>
-	<cfset g = randrange(0,255)>
-	<cfset b = randrange(0,255)>
-
-	<cfoutput>
-		<div style="color:rgb(#variables.r#,#variables.g#,#variables.b#)">
-		Copyright &copy; #year(variables.today)#. All rights reserved
-		</div>
-	</cfoutput>
-</footer>
-
-<cfif isdefined("url.debug")>
- <cfdump var="#variables#" label="Variables Scope">
- <cfdump var="#application#" label="Application Scope">
- <cfdump var="#session#" label="Session Scope">
-</cfif>
+<cfoutput>
+	<div style="color:rgb(#variables.r#,#variables.g#,#variables.b#)">
+	Copyright &copy; #year(variables.today)#. All rights reserved
+	</div>
+</cfoutput>
 
 </body>
 </html>
+

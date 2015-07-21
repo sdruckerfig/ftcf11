@@ -1,23 +1,22 @@
 <cfcomponent output="false">
 	
-	<cfset this.name = "ProposalManager">
+	<cfset this.name = "ProposalManager72Solution">
 	<cfset this.datasource = "ProposalManager">
 	<cfset this.sessionManagement = true>
 	<cfset this.clientManagement = false>
-	
-	<cfset this.restsettings.autoregister="true"/>
-  	<cfset this.restsettings.servicemapping="proposalmanager"/>
-  	<cfset this.restsettings.usehost=true/>
-	
 	<cfset this.serialization.serializeQueryAs = "struct">
 
+	<cfset this.restsettings.autoregister="true"/>
+	<cfset this.restsettings.servicemapping="proposalmanager"/>
+	<cfset this.restsettings.usehost=true/>
 	
 	<cffunction name="onApplicationStart">
 		
-		<cfset application.basehref = "/ftcf11/walksolution/walk7-1/">
-		<cfset application.cfcpath = "ftcf11.walksolution.walk7-1.components.">
+		<cfset application.basehref = "/ftcf11/walksolution/walk7-2/">
+		<cfset application.cfcpath = "ftcf11.walksolution.walk7-2.components.">
 		<cfset application.cssHref = "/ftcf11/shared/css/">
 		<cfset application.uploadDir = expandpath('.') & "/../../data">
+		<cfset application.PDFGenDir = expandpath('.') & "/generatedpdfs/">
 		
 		<cfset application.cfc = structnew()>
 		
@@ -41,7 +40,7 @@
 			<cfset onSessionStart()>
 		</cfif> 
 		
-		<cfif not isUserInRole("SuperAdmin") and
+		<cfif not isUserInAnyRole("SuperAdmin,Admin") and
 			  arguments.targetpage contains "/admin/">
 			  
 			  <cflocation url="#application.basehref#login/index.cfm">
