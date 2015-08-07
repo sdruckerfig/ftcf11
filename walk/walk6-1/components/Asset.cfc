@@ -194,7 +194,10 @@
 			<cflog file="biopdfdownloader" 
 			   text="Filespec: #local.filespec#" 
 			   type="information">
-			   
+			  
+			<!--- Walk 6-1 Step 17 --->
+			
+
 			<!--- Walk 6-1 Part 1 (Generate the tag) --->   
 			
 			
